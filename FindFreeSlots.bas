@@ -1,3 +1,8 @@
+' Declare public variables to hold the form values
+Public SelectedDate As String
+Public SelectedDays As Integer
+Public SelectedMinutes As Integer
+
 
 ' Helper function for EN weekdays
 Function GetEnglishWeekday(dayNumber As Integer) As String
@@ -32,24 +37,28 @@ Sub FindFreeSlotsAndInsertToNewMessage()
     Dim objSelection As Object
     Dim i As Integer
     
+    
     ' Initialize Outlook objects
     Set olApp = Outlook.Application
     Set olNS = olApp.GetNamespace("MAPI")
     Set olFolder = olNS.GetDefaultFolder(olFolderCalendar)
     Set olItems = olFolder.Items
     
+    FindSlotForm.Show
+    
     ' Ask user for the number of days
-    DaysAhead = InputBox("Geben Sie die Anzahl der zu überprüfenden Tage ein (nur Werktage):", "Zeitraum auswählen", "7")
+    ' DaysAhead = InputBox("Geben Sie die Anzahl der zu überprüfenden Tage ein (nur Werktage):", "Zeitraum auswählen", "7")
     
     ' Validate input
-    If Not IsNumeric(DaysAhead) Or DaysAhead < 1 Then
+    If Not IsNumeric(SelectedDays) Or SelectedDays < 1 Then
         MsgBox "Bitte geben Sie eine gültige Zahl größer als 0 ein.", vbExclamation, "Ungültige Eingabe"
         Exit Sub
     End If
     
     ' Set date range
-    StartDate = DateAdd("d", 1, Date)
-    EndDate = StartDate + CInt(DaysAhead) ' User-defined number of days ahead
+    ' StartDate = DateAdd("d", 1, Date)
+    StartDate = SelectedDate
+    EndDate = StartDate + CInt(SelectedDays) ' User-defined number of days ahead
     
     StartDateString = Format(StartDate, "yyyy-mm-dd hh:mm AMPM") & "AM"
     EndDateString = Format(EndDate, "yyyy-mm-dd hh:mm AMPM") & "AM"
@@ -62,6 +71,21 @@ Sub FindFreeSlotsAndInsertToNewMessage()
     filter = "[Start] >= '" & StartDateString & "' AND [Start] <= '" & EndDateString & "'"
     
     Set olRestrict = olItems.Restrict(filter)
+    
+    ' Dim testAppointment As Outlook.AppointmentItem
+    ' Debug.Print "Total Appointments Found: " & olRestrict.Count
+    ' Debug.Print "--------------------------------------------"
+
+
+    ' For Each testAppointment In olRestrict
+        ' If testAppointment.BusyStatus <> 0 Then
+            ' Debug.Print "Subject: " & testAppointment.Subject
+            ' Debug.Print "Start: " & Format(testAppointment.Start, "yyyy-mm-dd hh:mm AMPM")
+            ' Debug.Print "End: " & Format(testAppointment.End, "yyyy-mm-dd hh:mm AMPM")
+            ' Debug.Print "--------------------------------------------"
+        ' End If
+    ' Next
+    
 
     ' Loop through each day in the range
     freeSlots = ""
@@ -91,7 +115,7 @@ Sub FindFreeSlotsAndInsertToNewMessage()
                             ' New End of Free Slot is the Start of the Next Event
                             FreeSlotEnd = olAppointment.Start
                     
-                            If DateDiff("n", FreeSlotStart, FreeSlotEnd) >= 30 Then
+                            If DateDiff("n", FreeSlotStart, FreeSlotEnd) >= SelectedMinutes Then
                                 freeSlots = freeSlots & GetEnglishWeekday(Weekday(FreeSlotStart)) & " " & Format(FreeSlotStart, "dd.mm. h:mm AM/PM") & "  - " & Format(FreeSlotEnd, "h:mm AM/PM") & vbCrLf
                             End If
                             
