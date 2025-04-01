@@ -8,7 +8,7 @@ End Sub
 
 Private Sub btnOK_Click()
     ' Store values in public variables
-    SelectedDate = txtDate.Value
+    selectedDate = txtDate.Value
     SelectedDays = CInt(txtDays.Value) ' Convert to Integer
     SelectedMinutes = CInt(txtMinutes.Value) ' Convert to Integer
     
