@@ -17,7 +17,7 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#hints">Hints</a> •
+  <a href="#Hints-to-not-cry-everytime">Hints</a> •
 </p>
 
 <!-- Screenshot is optional -->
@@ -38,6 +38,6 @@
 - Also the Whole project with all Forms is saved
   -- The file is here: %appdata%\Microsoft\Outlook\
 
-## 🔧 Hints
+## 🤬 Hints to not cry everytime
 
 - modules should not have the same name then the sub in the module
