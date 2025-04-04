@@ -36,7 +36,7 @@
 
 - Everything is saved in seperated .bas Files here
 - Also the Whole project with all Forms is saved
-  -- The file is here: `%appdata%\Microsoft\Outlook\`
+  - The file is here: `%appdata%\Microsoft\Outlook\`
 
 ## 🤬 Hints to not cry everytime
 
