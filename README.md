@@ -1,3 +1,5 @@
+<!-- Credit to https://www.readme-templates.com/#key-features -->
+
 <h1 align="center">
   <br>
   <a href="https://p-goetz.de/"><img src="https://p-goetz.de/wp-content/uploads/2025/04/20250404_P-Goetz_DEV_logo.png" alt="P-Goetz" width="200"></a>
@@ -8,6 +10,7 @@
 <p align="center">
   <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Version-1.0.0-blue"></a>
   <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Author-Philipp_Goetz-yellow"></a>
+  <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/uptime-100%25-brightgreen"></a>
 
 </p>
 
@@ -29,13 +32,11 @@
 - ✅ Create a Trello Task based on the currently selected Mail
 - 🔜 Coming Soon: for now nothing on the Roadmap
 
-## How To Use
+## 🔧 How To Use
 
-# Everything is saved in seperated .bas Files here
-
-# Also the Whole project with all Forms is saved
-
-## The file is here: %appdata%\Microsoft\Outlook\
+- Everything is saved in seperated .bas Files here
+- Also the Whole project with all Forms is saved
+  -- The file is here: %appdata%\Microsoft\Outlook\
 
 ## 🔧 Hints
 
