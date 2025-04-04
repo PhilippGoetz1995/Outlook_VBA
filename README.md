@@ -17,7 +17,7 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#Hints-to-not-cry-everytime">Hints</a> •
+  <a href="#Hints-to-not-cry-everytime">Hints</a>
 </p>
 
 <!-- Screenshot is optional -->
