@@ -1,7 +1,7 @@
 ' Declare public variables to hold the form values
-Public SelectedDate As String
-Public SelectedDays As Integer
-Public SelectedMinutes As Integer
+Public selectedDate As String
+Public selectedDays As Integer
+Public selectedMinutes As Integer
 
 
 ' Helper function for EN weekdays
@@ -19,123 +19,111 @@ End Function
 
 
 Sub FindFreeSlotsAndInsertToNewMessage()
+
+    ' GENERAL NOTES
+    ' # Get Start and End Date from form
+    ' # Format the dates and times correct
+    ' # Go trough every working day and start with the beginning of the day and check for busy meetings
+    ' # add it to the current mail
+
     Dim olApp As Outlook.Application
     Dim olNS As Outlook.NameSpace
-    Dim olFolder As Outlook.MAPIFolder
+    Dim olCalendar As Outlook.MAPIFolder
     Dim olItems As Outlook.Items
-    Dim olAppointment As Outlook.AppointmentItem
-    Dim olRestrict As Outlook.Items
-    Dim StartDate As Date, EndDate As Date
-    Dim startTime As Date, EndTime As Date
-    Dim StartDateString As String
-    Dim EndDateString As String
-    Dim dt As Date
+    Dim filteredItems As Outlook.Items
+    Dim olItem As Object
+    
+    Dim startDate As Date, endDate As Date
+    Dim startTime As Date, endTime As Date
+    Dim filter As String
+    
     Dim freeSlots As String
-    Dim BusySlots As Object
+    
     Dim FreeSlotStart As Date
     Dim FreeSlotEnd As Date
-    Dim objSelection As Object
-    Dim i As Integer
-    
-    
-    ' Initialize Outlook objects
-    Set olApp = Outlook.Application
-    Set olNS = olApp.GetNamespace("MAPI")
-    Set olFolder = olNS.GetDefaultFolder(olFolderCalendar)
-    Set olItems = olFolder.Items
     
     FindSlotForm.Show
     
-    ' Ask user for the number of days
-    ' DaysAhead = InputBox("Geben Sie die Anzahl der zu überprüfenden Tage ein (nur Werktage):", "Zeitraum auswählen", "7")
-    
     ' Validate input
-    If Not IsNumeric(SelectedDays) Or SelectedDays < 1 Then
+    If Not IsNumeric(selectedDays) Or selectedDays < 1 Then
         MsgBox "Bitte geben Sie eine gültige Zahl größer als 0 ein.", vbExclamation, "Ungültige Eingabe"
         Exit Sub
     End If
     
     ' Set date range
-    ' StartDate = DateAdd("d", 1, Date)
-    StartDate = SelectedDate
-    EndDate = StartDate + CInt(SelectedDays) ' User-defined number of days ahead
+    startDate = CDate(selectedDate)
+    endDate = startDate + CInt(selectedDays) ' User-defined number of days ahead
     
-    StartDateString = Format(StartDate, "yyyy-mm-dd hh:mm AMPM") & "AM"
-    EndDateString = Format(EndDate, "yyyy-mm-dd hh:mm AMPM") & "AM"
-    
-    ' Filter calendar items for the given period
-    olItems.Sort "[Start]", False
+    startDate = startDate + TimeValue("07:00:00")
+    endDate = endDate + TimeValue("18:00:00")
+
+
+    Set olApp = Outlook.Application
+    Set olNS = olApp.GetNamespace("MAPI")
+    Set olCalendar = olNS.GetDefaultFolder(olFolderCalendar)
+    Set olItems = olCalendar.Items
+
+    ' Important: Sort by start date and include recurring items
+    olItems.Sort "[Start]"
     olItems.IncludeRecurrences = True
-    
-    Dim filter As String
-    filter = "[Start] >= '" & StartDateString & "' AND [Start] <= '" & EndDateString & "'"
-    
-    Set olRestrict = olItems.Restrict(filter)
-    
-    ' Dim testAppointment As Outlook.AppointmentItem
-    ' Debug.Print "Total Appointments Found: " & olRestrict.Count
-    ' Debug.Print "--------------------------------------------"
 
+    ' Define filter in the following syntax dd.mm.yyyy HH:nn
+    filter = "[Start] >= '" & Format(startDate, "dd.mm.yyyy HH:nn") & "' AND [End] <= '" & Format(endDate, "dd.mm.yyyy HH:nn") & "'"
 
-    ' For Each testAppointment In olRestrict
-        ' If testAppointment.BusyStatus <> 0 Then
-            ' Debug.Print "Subject: " & testAppointment.Subject
-            ' Debug.Print "Start: " & Format(testAppointment.Start, "yyyy-mm-dd hh:mm AMPM")
-            ' Debug.Print "End: " & Format(testAppointment.End, "yyyy-mm-dd hh:mm AMPM")
-            ' Debug.Print "--------------------------------------------"
-        ' End If
-    ' Next
+    Set filteredItems = olItems.Restrict(filter)
+
+    ' DEBUGGING Loop through filtered items
+'    For Each olItem In filteredItems
+'        Debug.Print "Subject: " & olItem.Subject
+'        Debug.Print "Start: " & olItem.Start
+'        Debug.Print "End: " & olItem.End
+'        Debug.Print "----------------------------"
+'    Next
+'
+'    Debug.Print filteredItems.Count & " calendar items found between " & startDate & " and " & endDate
     
-
-    ' Loop through each day in the range
     freeSlots = ""
     
-    EndDate = DateAdd("d", -1, EndDate)
-    
-    For dt = StartDate To EndDate
+    For dt = startDate To endDate
         If Weekday(dt, vbMonday) <= 5 Then ' Only Monday to Friday
-            startTime = dt + TimeValue("07:00:00") ' 07:00 AM
-            EndTime = dt + TimeValue("19:00:00")   ' 07:00 PM
-            
+
+            ' Set every iteration the start of the day
+            startTime = DateValue(dt) + TimeSerial(7, 0, 0)
+            endTime = DateValue(dt) + TimeSerial(18, 0, 0)
+
             ' Set the Free Slot Start Time to 7 AM
             FreeSlotStart = startTime
             
-            ' Get all appointments for the day
-            Set BusySlots = olRestrict
-            For Each olAppointment In BusySlots
+            ' Iterate trough each calender item
+            For Each olItem In filteredItems
             
-                If olAppointment.BusyStatus = olBusy Or olAppointment.BusyStatus = olOutOfOffice Then
+                If olItem.BusyStatus = olBusy Or olItem.BusyStatus = olOutOfOffice Then
                 
                     ' Event need to be within working hours
-                    If olAppointment.Start >= startTime And olAppointment.Start < EndTime Then
+                    If olItem.Start >= startTime And olItem.Start < endTime Then
                         
                         ' If the event is parallel to the previous event => Only if the End of the Event is behind the start of the Free Slot => Otherwise just go to the next one
-                        If olAppointment.End >= FreeSlotStart Then
+                        If olItem.End >= FreeSlotStart Then
                             
                             ' New End of Free Slot is the Start of the Next Event
-                            FreeSlotEnd = olAppointment.Start
+                            FreeSlotEnd = olItem.Start
                     
-                            If DateDiff("n", FreeSlotStart, FreeSlotEnd) >= SelectedMinutes Then
+                            If DateDiff("n", FreeSlotStart, FreeSlotEnd) >= selectedMinutes Then
                                 freeSlots = freeSlots & GetEnglishWeekday(Weekday(FreeSlotStart)) & " " & Format(FreeSlotStart, "dd.mm. h:mm AM/PM") & "  - " & Format(FreeSlotEnd, "h:mm AM/PM") & vbCrLf
                             End If
                             
-                            FreeSlotStart = olAppointment.End
+                            FreeSlotStart = olItem.End
                         End If
                     End If
                 End If
             Next
             
             ' Check for free time between last meeting and end of work hours
-            If DateDiff("n", FreeSlotStart, EndTime) >= 30 Then
-                freeSlots = freeSlots & GetEnglishWeekday(Weekday(FreeSlotStart)) & " " & Format(FreeSlotStart, "dd.mm. h:mm AM/PM") & "  - " & Format(EndTime, "h:mm AM/PM") & vbCrLf
+            If DateDiff("n", FreeSlotStart, endTime) >= 30 Then
+                freeSlots = freeSlots & GetEnglishWeekday(Weekday(FreeSlotStart)) & " " & Format(FreeSlotStart, "dd.mm. h:mm AM/PM") & "  - " & Format(endTime, "h:mm AM/PM") & vbCrLf
             End If
         End If
     Next dt
-    
-    ' Debug.Print freeSlots
-    
-    ' Get the currently active Outlook application
-    Set olApp = Outlook.Application
     
     ' Check if there is an active inspector (open email window)
     If olApp.ActiveInspector Is Nothing Then
@@ -160,12 +148,5 @@ Sub FindFreeSlotsAndInsertToNewMessage()
     
     ' Insert free slots at the cursor position
     objSelection.TypeText freeSlots
-    
-    ' Clean up
-    Set olApp = Nothing
-    Set olNS = Nothing
-    Set olFolder = Nothing
-    Set olItems = Nothing
-    Set objSelection = Nothing
-End Sub
 
+End Sub

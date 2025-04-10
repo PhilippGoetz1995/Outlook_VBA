@@ -17,7 +17,7 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#Hints-to-not-cry-everytime">Hints</a>
+  <a href="#hints-to-not-cry-everytime">Hints</a>
 </p>
 
 <!-- Screenshot is optional -->
@@ -37,6 +37,7 @@
 - Everything is saved in seperated .bas Files here
 - Also the Whole project with all Forms is saved
   - The file is here: `%appdata%\Microsoft\Outlook\`
+- The Ribbon Settings are saved and can be imported via UI => need to be imported seperatly "New Mail" & "Mail Explorer"
 
 ## 🤬 Hints to not cry everytime
 
