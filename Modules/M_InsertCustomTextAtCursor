@@ -23,7 +23,7 @@ Sub InsertFormattedTextAtCursor()
     sel.MoveLeft Unit:=1, Count:=Len(fullText), Extend:=True
     
     ' Apply green color to whole selection
-    sel.Font.Color = RGB(0, 128, 0)
+    sel.Font.Color = RGB(112, 173, 71)
     sel.Font.Bold = True
     
     ' After apply the color and Bold move one position to the right

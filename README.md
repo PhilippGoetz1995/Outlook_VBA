@@ -8,7 +8,7 @@
 <h4 align="center">📦 Outlook VBA (Visual Basic Application) Modules</h4>
 
 <p align="center">
-  <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Version-1.0.0-blue"></a>
+  <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Version-1.0.1-blue"></a>
   <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Author-Philipp_Goetz-yellow"></a>
   <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/uptime-100%25-brightgreen"></a>
 
@@ -30,6 +30,7 @@
 - ✅ Send a Message to n8n and check there with ChatGPT the Format
 - ✅ Send a Message to n8n and translate there with ChatGPT
 - ✅ Create a Trello Task based on the currently selected Mail
+- ✅ Insert a Comment in a Reply in correct color
 - 🔜 Coming Soon: for now nothing on the Roadmap
 
 ## 🔧 How To Use
