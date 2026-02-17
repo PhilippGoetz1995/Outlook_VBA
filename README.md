@@ -44,7 +44,7 @@ Module 3
 
 1. Everything is saved in seperated .bas Files in the /Modules
 2. Also the Whole project with all Forms is saved and can be just copy & paste again to the same location and then it will work
-  - The file is here: `%appdata%\Microsoft\Outlook\`
+   - The file is here: `%appdata%\Microsoft\Outlook\`
 
 ## 🤬 Hints to not cry everytime
 
