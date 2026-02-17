@@ -8,7 +8,7 @@
 <h4 align="center">📦 Outlook VBA (Visual Basic Application) Modules</h4>
 
 <p align="center">
-  <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Version-1.0.1-blue"></a>
+  <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Version-1.0.2-blue"></a>
   <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/Author-Philipp_Goetz-yellow"></a>
   <a href="https://p-goetz.de/"><img src="https://img.shields.io/badge/uptime-100%25-brightgreen"></a>
 
@@ -23,7 +23,14 @@
 <!-- Screenshot is optional -->
 <!-- ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif) -->
 
-## 🚀 Key Features
+## 🚀 Features
+
+Module 1 - InsertFormattedTextAtCursor
+- Insert a Comment in a Reply in correct color
+
+Module 2
+
+Module 3
 
 - ✅ Find a free Slot in the Calender
 - ✅ Create a Reminder based on the currently selected Mail
@@ -35,10 +42,9 @@
 
 ## 🔧 How To Use
 
-- Everything is saved in seperated .bas Files here
-- Also the Whole project with all Forms is saved
+- Everything is saved in seperated .bas Files in the /Modules
+- Also the Whole project with all Forms is saved and can be just saved there to use
   - The file is here: `%appdata%\Microsoft\Outlook\`
-- The Ribbon Settings are saved and can be imported via UI => need to be imported seperatly "New Mail" & "Mail Explorer"
 
 ## 🤬 Hints to not cry everytime
 
