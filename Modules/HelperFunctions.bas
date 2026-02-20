@@ -54,7 +54,7 @@ Sub MoveMailOrConversation(targetFolderName As String)
     Set objMail = objSelection.Item(1)
 
     ' Set the target folder (Change this to your desired folder path)
-    Set targetFolder = objNamespace.GetDefaultFolder(6).Folders(targetFolderName)
+    Set targetFolder = objNamespace.GetDefaultFolder(olFolderInbox).Folders(targetFolderName)
 
     ' Check if email is part of a conversation
     Set objConversation = objMail.GetConversation
@@ -69,7 +69,15 @@ Sub MoveMailOrConversation(targetFolderName As String)
             ' Ensure it's a MailItem before moving
             If Not objItem Is Nothing Then
                 If TypeOf objItem Is MailItem Then
-                    objItem.Move targetFolder
+                    
+                    ' Check if the mail is in the "Posteingang" otherwise the Move command will not work
+                    Dim folderName As String
+                    folderName = objItem.Parent.Name
+                    
+                    If folderName = "Posteingang" Or folderName = "Inbox" Then
+                        objItem.Move targetFolder
+                    End If
+                    
                 End If
             End If
         Loop
