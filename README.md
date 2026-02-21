@@ -25,31 +25,24 @@
 
 ## 🚀 Features
 
-Module 1 - InsertFormattedTextAtCursor
+<ins>Module 1 - InsertFormattedTextAtCursor</ins>
 - Insert a Comment in a Reply in correct color
 
-Module 2 - CreateReminderFromMail
+<ins>Module 2 - CreateReminderFromMail</ins>
 - Create a Calender Entry as a reminder & move mail to "FollowUp"
 
-Module 3 - CreateReminderFromNewMail
+<ins>Module 3 - CreateReminderFromNewMail</ins>
 - From "New Mail Window" Create a reminder to followUp on mail
 
-Module 4 - n8nTrello
+<ins>Module 4 - n8nTrello</ins>
 - Create a Task for the Mail & move Mail in "TODO"
 
-Module 5 - Find Free Slots
+<ins>Module 5 - Find Free Slots</ins>
 - Search for free Slots and add them in the mail
 
-ThisOutlookSession - AttachmentChecker
+<ins>ThisOutlookSession - AttachmentChecker</ins>
 - Search for words like "Anhang" and if no attachment is there show error
 
-- ✅ Find a free Slot in the Calender
-- ✅ Create a Reminder based on the currently selected Mail
-- ✅ Send a Message to n8n and check there with ChatGPT the Format
-- ✅ Send a Message to n8n and translate there with ChatGPT
-- ✅ Create a Trello Task based on the currently selected Mail
-- ✅ Insert a Comment in a Reply in correct color
-- 🔜 Coming Soon: for now nothing on the Roadmap
 
 ## 🔧 How To Use
 
