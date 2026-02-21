@@ -28,9 +28,20 @@
 Module 1 - InsertFormattedTextAtCursor
 - Insert a Comment in a Reply in correct color
 
-Module 2
+Module 2 - CreateReminderFromMail
+- Create a Calender Entry as a reminder & move mail to "FollowUp"
 
-Module 3
+Module 3 - CreateReminderFromNewMail
+- From "New Mail Window" Create a reminder to followUp on mail
+
+Module 4 - n8nTrello
+- Create a Task for the Mail & move Mail in "TODO"
+
+Module 5 - Find Free Slots
+- Search for free Slots and add them in the mail
+
+ThisOutlookSession - AttachmentChecker
+- Search for words like "Anhang" and if no attachment is there show error
 
 - ✅ Find a free Slot in the Calender
 - ✅ Create a Reminder based on the currently selected Mail
